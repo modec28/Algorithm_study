@@ -3,7 +3,10 @@ def multiply_same_size_matrix(a,b):
     for row in range(len(a)):
         result_1d = list()
         for col in range(len(a[0])):
-            result_1d.append(a[row][col]*b[row][col])
+            if b[row][col] == 0:
+                result_1d.append(0)
+            else:
+                result_1d.append(a[row][col])
         result.append(result_1d)
     return result
 
@@ -27,19 +30,25 @@ def pattern_print(array):
 
         result = pattern_print(result)
 
-        concated_col = result[:]
+        concat_col = concate_same_size_matrix(result,result)
+        result = concate_same_size_matrix(result,concat_col)
 
-        for i in range(2):
-            concated_col = concate_same_size_matrix(concated_col,result)
+        pattern_result = result+ result+result
 
-        result = concated_col[:]
+        result = list()
+        for i in range(num):
+            temp_result = list()
+            for j in range(num):
+                if (i>=prev_num and i<prev_num<<1) and (j>=prev_num and j<prev_num<<1):
+                    temp_result.append(0)
+                else:
+                    if pattern_result[i][j] == 1:
+                        temp_result.append(1)
+                    else:
+                        temp_result.append(0)
+            result.append(temp_result)
 
-        for i in range(2):
-            result = (result+concated_col)[:]
 
-        for i in range(prev_num, prev_num<<1):
-            for j in range(prev_num, prev_num<<1):
-                result[i][j] = 0
 
         return result
 
